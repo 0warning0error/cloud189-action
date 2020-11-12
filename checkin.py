@@ -3,6 +3,8 @@ from urllib import parse
 
 s = requests.Session()
 
+errorCode_translation = {"User_Not_Chance":"用户无抽奖机会"}
+
 username = ""
 password = ""
 
@@ -36,15 +38,17 @@ def main():
     }
     response = s.get(url,headers=headers)
     if ("errorCode" in response.text):
-        print(response.text)
+        errorCode = response.json().get("errorCode")
+        print(errorCode_translation.get(errorCode,errorCode),response.json())
     else:
-        description = response.json()['description']
+        description = response.json().get('description',"无")
         print(f"抽奖获得{description}")
     response = s.get(url2,headers=headers)
     if ("errorCode" in response.text):
-        print(response.text)
+        errorCode = response.json().get("errorCode")
+        print(errorCode_translation.get(errorCode,errorCode),response.json())
     else:
-        description = response.json()['description']
+        description = response.json().get('description',"无")
         print(f"抽奖获得{description}")
 
 BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
@@ -130,4 +134,3 @@ def login(username, password):
 
 if __name__ == "__main__":
     main()
-
