@@ -41,15 +41,23 @@ def main():
         errorCode = response.json().get("errorCode")
         print(errorCode_translation.get(errorCode,errorCode),response.json())
     else:
-        description = response.json().get('description',"无")
-        print(f"抽奖获得{description}")
+        r_json = response.json()
+        if isinstance(r_json,dict):
+            description = response.json().get('description',"无")
+            print(f"抽奖获得{description}")
+        else:
+            print(response.text)
     response = s.get(url2,headers=headers)
     if ("errorCode" in response.text):
         errorCode = response.json().get("errorCode")
         print(errorCode_translation.get(errorCode,errorCode),response.json())
     else:
-        description = response.json().get('description',"无")
-        print(f"抽奖获得{description}")
+        r_json = response.json()
+        if isinstance(r_json,dict):
+            description = response.json().get('description',"无")
+            print(f"抽奖获得{description}")
+        else:
+            print(response.text)
 
 BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
 def int2char(a):
